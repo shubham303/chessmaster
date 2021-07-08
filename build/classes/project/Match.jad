@@ -1,0 +1,217 @@
+// Decompiled by Jad v1.5.8e. Copyright 2001 Pavel Kouznetsov.
+// Jad home page: http://www.geocities.com/kpdus/jad.html
+// Decompiler options: packimports(3) 
+// Source File Name:   Match.java
+
+package project;
+
+import java.io.PrintStream;
+import java.sql.*;
+
+// Referenced classes of package project:
+//            Move
+
+public class Match
+{
+
+    public Match(String match_id, String player1, String player2)
+    {
+        move_count = 0;
+        board = new int[8][8];
+        match_aborted = false;
+        this.player1 = player1;
+        this.player2 = player2;
+        last_move = null;
+        write_turn = player1;
+        read_turn = "";
+        this.match_id = match_id;
+        move_list = new Move[100];
+        board[0][0] = 4;
+        board[0][1] = 3;
+        board[0][2] = 2;
+        board[0][3] = 6;
+        board[0][4] = 5;
+        board[0][5] = 2;
+        board[0][6] = 3;
+        board[0][7] = 4;
+        for(int i = 0; i < 8; i++)
+        {
+            board[1][i] = 1;
+            board[6][i] = -1;
+        }
+
+        board[7][0] = -4;
+        board[7][1] = -3;
+        board[7][2] = -2;
+        board[7][3] = -6;
+        board[7][4] = -5;
+        board[7][5] = -2;
+        board[7][6] = -3;
+        board[7][7] = -4;
+        result = null;
+    }
+
+    String getMatchId()
+    {
+        return match_id;
+    }
+
+    public String getFirstPlayer()
+    {
+        return player1;
+    }
+
+    public String getSecondPlayer()
+    {
+        return player2;
+    }
+
+    public void writeMove(String player_id, Move move)
+    {
+        while(!write_turn.equals(player_id)) 
+            try
+            {
+                wait();
+            }
+            catch(InterruptedException interruptedexception) { }
+        last_move = move;
+        if(move_count == 100)
+            move_count = 0;
+        move_list[move_count++] = move;
+        if(player_id.equals(player1))
+            makeChangesInBoard(true, move);
+        else
+            makeChangesInBoard(false, move);
+        write_turn = "";
+        if(player_id == player1)
+            read_turn = player2;
+        else
+            read_turn = player1;
+        notifyAll();
+    }
+
+    public void makeChangesInBoard(boolean white_turn, Move move)
+    {
+        int start;
+        int end;
+        if(!white_turn)
+        {
+            start = 63 - Integer.parseInt(move.start);
+            end = 63 - Integer.parseInt(move.end);
+        } else
+        {
+            start = Integer.parseInt(move.start);
+            end = Integer.parseInt(move.end);
+        }
+        int val;
+        try
+        {
+            val = Integer.parseInt(move.val);
+        }
+        catch(Exception e)
+        {
+            val = 0;
+        }
+        int start_row = start / 8;
+        int start_column = start % 8;
+        int end_row = end / 8;
+        int end_column = end % 8;
+        if(val == 0)
+            board[end_row][end_column] = board[start_row][start_column];
+        else
+            board[end_row][end_column] = val;
+        board[start_row][start_column] = 0;
+    }
+
+    public Move readMove(String player_id)
+    {
+        while(!read_turn.equals(player_id)) 
+            try
+            {
+                wait();
+            }
+            catch(InterruptedException interruptedexception) { }
+        return last_move;
+    }
+
+    public Move getMove(int move_number)
+    {
+        if(move_number == -1)
+            return null;
+        while(move_number >= move_count) 
+            try
+            {
+                wait();
+            }
+            catch(InterruptedException e)
+            {
+                e.printStackTrace();
+            }
+        return move_list[move_number];
+    }
+
+    public void setResult(String id)
+    {
+        String status;
+        if(!id.equals("stalemate") && !id.equals("abort"))
+        {
+            status = "completed";
+            String winner = id;
+        } else
+        {
+            status = id;
+        }
+        try
+        {
+            Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "c##project", "project");
+            String sql = "insert into match values(?,?,?,?,?)";
+            PreparedStatement st = con.prepareStatement(sql);
+            st.setString(1, match_id);
+            st.setString(2, player1);
+            st.setString(3, player2);
+            st.setString(4, status);
+            st.setString(5, id);
+            st.executeUpdate();
+            con.close();
+        }
+        catch(Exception e)
+        {
+            System.out.println("exception at set result");
+        }
+    }
+
+    public String getResult()
+    {
+        return result;
+    }
+
+    public void abort(String id)
+    {
+        if(player1.equals(id))
+            read_turn = player2;
+        else
+            read_turn = player1;
+        match_aborted = true;
+        setResult("abort");
+    }
+
+    public void addViewer(String s)
+    {
+    }
+
+    public void removeViewer(String s)
+    {
+    }
+
+    private String match_id;
+    private String player1;
+    private String player2;
+    private Move last_move;
+    public String write_turn;
+    public String read_turn;
+    private Move move_list[];
+    private String result;
+    public int move_count;
+    public int board[][];
+    boolean match_aborted;
+}

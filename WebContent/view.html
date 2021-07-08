@@ -1,0 +1,129 @@
+<html>
+<head>
+<meta name="expires" content="0">
+<meta charset="UTF-8"> 
+<title>Chessboard using Pure CSS and HTML</title>
+<style type="text/css">
+.chessboard {
+    width: 480px;
+    height: 480px;
+    margin: 20px;
+    border: 25px solid #333;
+    cursor:pointer;
+
+}
+.box
+{
+	position:absolute;
+	top:=40px;
+	left:-800px;
+}
+.black {
+    float: left;
+    width: 56px;
+    height: 56px;
+    background-color: #999;
+     font-size:50px;
+    text-align:center;
+	border: 2px solid #999;
+    display: table-cell;
+    vertical-align:middle;
+}
+.white {
+    float: left;
+    width: 56px;
+    height: 56px;
+    background-color: #fff;
+    font-size:50px;
+    text-align:center;
+	border: 2px solid #fff;
+    display: table-cell;
+    vertical-align:middle;
+}
+</style>      
+<script src="viewmoves.js?3"></script>
+
+</head>
+<body onload="getMove();">
+
+<div class="chessboard" id="64">
+
+<!-- 1st -->
+<div class="white" id=63>&#9820;</div>
+<div class="black" id=62>&#9822;</div>
+<div class="white" id=61>&#9821;</div>
+<div class="black" id=60>&#9819;</div>
+<div class="white" id=59>&#9818;</div>
+<div class="black" id=58>&#9821;</div>
+<div class="white" id=57>&#9822;</div>
+<div class="black" id=56>&#9820;</div>
+<!-- 2nd -->
+<div class="black" id=55>&#9823;</div>
+<div class="white" id=54>&#9823;</div>
+<div class="black" id=53>&#9823;</div>
+<div class="white" id=52>&#9823;</div>
+<div class="black" id=51>&#9823;</div>
+<div class="white" id=50>&#9823;</div>
+<div class="black" id=49>&#9823;</div>
+<div class="white" id=48>&#9823;</div>
+<!-- 3th -->
+<div class="white" id=47></div>
+<div class="black" id=46></div>
+<div class="white" id=45></div>
+<div class="black" id=44></div>
+<div class="white" id=43></div>
+<div class="black" id=42></div>
+<div class="white" id=41></div>
+<div class="black" id=40></div>
+<!-- 4st -->
+<div class="black" id=39></div>
+<div class="white" id=38></div>
+<div class="black" id=37></div>
+<div class="white" id=36></div>
+<div class="black" id=35></div>
+<div class="white" id=34></div>
+<div class="black" id=33></div>
+<div class="white" id=32></div>
+<!-- 5th -->
+<div class="white" id=31></div>
+<div class="black" id=30></div>
+<div class="white" id=29></div>
+<div class="black" id=28></div>
+<div class="white" id=27></div>
+<div class="black" id=26></div>
+<div class="white" id=25></div>
+<div class="black" id=24></div>
+<!-- 6th -->
+<div class="black" id=23></div>
+<div class="white" id=22></div>
+<div class="black" id=21></div>
+<div class="white" id=20></div>
+<div class="black" id=19></div>
+<div class="white" id=18></div>
+<div class="black" id=17></div>
+<div class="white" id=16></div>
+<!-- 7th -->
+<div class="white" id=15>&#9817;</div>
+<div class="black" id=14>&#9817;</div>
+<div class="white" id=13>&#9817;</div>
+<div class="black" id=12>&#9817;</div>
+<div class="white" id=11>&#9817;</div>
+<div class="black" id=10>&#9817;</div>
+<div class="white" id=9>&#9817;</div>
+<div class="black" id=8>&#9817;</div>
+<!-- 8th -->
+<div class="black" id=7>&#9814;</div>
+<div class="white" id=6>&#9816;</div>
+<div class="black" id=5>&#9815;</div>
+<div class="white" id=4>&#9813;</div>
+<div class="black" id=3>&#9812;</div>
+<div class="white" id=2>&#9815;</div>
+<div class="black" id=1>&#9816;</div>
+<div class="white" id=0>&#9814;</div>
+
+</div>
+
+<h id="111">"shubham"<h>
+
+</body>
+</html>

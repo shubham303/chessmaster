@@ -1,0 +1,62 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Home Page</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="matchesLoader.js"></script>
+</head>
+<body onload="getliveMatches();">
+<style>
+ .jumbotron {
+      background-color: #f4511e;
+      text-align: center;
+      color: #fff;
+  }
+  </style>
+
+<div class="jumbotron">
+  <h1>ChessMaster</h1>      
+</div>
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">ChessMaster</a>
+    </div>
+    <ul class="nav navbar-nav">
+    <li>
+    	<form method="post" action="MatchSetterServlet">
+    	<input type="submit" class="btn" value="play one to one">
+    	</form>    
+      </li>
+      <li><a href="#">Play With BOT</a></li>
+      <li><a href="learngame.html">Start Learning</a></li>
+      <li><a href="puzzles.html">Puzzles</a></li>
+      <li><a href="http://www.thechesswebsite.com/famous-chess-games">Famous Games</a></li>
+ 	  <li><a href="Logout">Log Out</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container">
+<h2>10 Online Matches That Are Being Played Online</h2>
+  <p>Select The Match You Want To View</p>
+  <div class="list-group">
+    <a href="MatchViewerServlet?name=1" class="list-group-item list-group-item-success">First match</a>
+    <a href="#" class="list-group-item list-group-item-info">Second match</a>
+    <a href="#" class="list-group-item list-group-item-warning">Third match</a>
+    <a href="#" class="list-group-item list-group-item-danger">Fourth match</a>
+    <a href="#" class="list-group-item list-group-item-success">Fifth match</a>
+    <a href="#" class="list-group-item list-group-item-info">Sixth match</a>
+    <a href="#" class="list-group-item list-group-item-warning">Seventh match</a>
+    <a href="#" class="list-group-item list-group-item-danger">Eighth match</a>
+    <a href="#" class="list-group-item list-group-item-success">Ninth match</a>
+    <a href="#" class="list-group-item list-group-item-info">Tenth match</a>
+  </div>
+  </div>
+  </body>
+  </html>
+
